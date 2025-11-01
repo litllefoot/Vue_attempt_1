@@ -1,5 +1,20 @@
 <script setup>
 import { ref, reactive, shallowRef } from "vue";
+import DifferentColour from "./components/DifferentColour.vue";
+import VModel from "./components/V-model.vue";
+import vFor from "./components/v-for.vue";
+import Destructure from "./components/Destructure.vue";
+import VforObj from "./components/VforObj.vue";
+import DinamicAtributes from "./components/DinamicAtributes.vue";
+import SuccessBtn from "./components/SuccessBtn.vue";
+import EventTask from "./components/EventTask.vue";
+import WatchEffect from "./components/WatchEffect.vue";
+import WatchApi from "./components/WatchApi.vue";
+import WatchApiAsync from "./components/WatchApiAsync.vue";
+import FormValidatin from "./components/FormValidatin.vue";
+import RefVfor from "./components/RefVfor.vue";
+import DragablEl from "./components/DragablEl.vue";
+
 const title = ref("Здравствуйте!");
 const dataColor = ref("red");
 
@@ -16,6 +31,15 @@ const shallowCount = shallowRef({ count: { count: 0 } });
 const word = ref("Rufina");
 const password = ref("");
 const today = ref(new Date());
+
+const array = ref(["Привет", "Как дела", "Пока"]);
+
+const objectVfor = reactive({
+  name: "Rufina",
+  surname: "Litfullina",
+  pet: true,
+  age: 18,
+});
 function greedToggle() {
   title.value === "Здравствуйте!"
     ? (title.value = "И снова здравствуйте")
@@ -51,20 +75,46 @@ function turbo10Func() {
 </script>
 
 <template>
-  <h1 @click="greedToggle">{{ title }}</h1>
-  <button :dataColor @click="changeColorBtn">
-    КНОПКА меняет цвет по атрибуту
-  </button>
-  <div v-html="rawHtml"></div>
-  <input v-bind="inputAttributes" /> <br />
-  <button @click="isVisible = !isVisible">Скрыть/ показать текст v-if</button>
-  <p v-if="isVisible">Видно</p>
-  <form action="">
-    <button type="submit" @click.prevent>
-      Кнопка Submit форме НЕ перегружает страницу
-    </button>
-  </form>
+  <DragablEl></DragablEl>
+  <RefVfor></RefVfor> <br />
+  <FormValidatin></FormValidatin><br />
+  <WatchApiAsync></WatchApiAsync><br />
+  <WatchApi></WatchApi>
+  <WatchEffect></WatchEffect> <br />
+  <EventTask></EventTask> <br />
+  <SuccessBtn class="success"></SuccessBtn>
+  <DinamicAtributes></DinamicAtributes>
+  <VforObj></VforObj>
+  <Destructure></Destructure>
+  <vFor></vFor>
+  <VModel></VModel>
+  <ul>
+    <li v-for="(value, index) in array" :key="value">
+      {{ index }} - {{ value }}
+    </li>
+  </ul>
 
+  <ul>
+    <li v-for="(value, key, index) of objectVfor" :key="key">
+      {{ index }} / {{ key }} / {{ value }}
+    </li>
+  </ul>
+  <section>
+    <h1 @click="greedToggle">{{ title }}</h1>
+    <button :dataColor @click="changeColorBtn">
+      КНОПКА меняет цвет по атрибуту
+    </button>
+    <div v-html="rawHtml"></div>
+    <DifferentColour></DifferentColour>
+    <input v-bind="inputAttributes" /> <br />
+    <button @click="isVisible = !isVisible">Скрыть/ показать текст v-if</button>
+    <p v-if="isVisible">Видно</p>
+    <form action="">
+      <button type="submit" @click.prevent>
+        Кнопка Submit форме НЕ перегружает страницу
+      </button>
+    </form>
+  </section>
   <section class="task-1">
     <p>Как увеличиваются твои навыки при регулярном обучении?</p>
     <p>
@@ -81,12 +131,12 @@ function turbo10Func() {
       "помогаторами". Уровень
       <span>{{ count * 10 }}</span>
     </p>
-    <Button @click="count++">День {{ count }}</Button>
+    <button @click="count++">День {{ count }}</button>
     <p>
       Разовое изучение на 10 часов один раз в год.Уровень
       <span>{{ shallowCount.count.count }}</span>
-      <Button @click="turboFunc">Попробовать Турбо 1 раз</Button>
-      <Button @click="turbo10Func">Турбо 10 раз Уровень через 10 лет</Button>
+      <button @click="turboFunc">Попробовать Турбо 1 раз</button>
+      <button @click="turbo10Func">Турбо 10 раз Уровень через 10 лет</button>
     </p>
   </section>
   <section class="task-2">
