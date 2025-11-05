@@ -14,6 +14,7 @@ import WatchApiAsync from "./components/WatchApiAsync.vue";
 import FormValidatin from "./components/FormValidatin.vue";
 import RefVfor from "./components/RefVfor.vue";
 import DragablEl from "./components/DragablEl.vue";
+import FormAgeTotal from "./components/FormAgeTotal.vue";
 
 const title = ref("Здравствуйте!");
 const dataColor = ref("red");
@@ -75,6 +76,24 @@ function turbo10Func() {
 </script>
 
 <template>
+  <FormAgeTotal></FormAgeTotal>
+  <AlertComponent color="green">
+    <template #title-slot> Успешная загрузка</template>
+    <template #message-slot> данные загружены на 100%</template>
+  </AlertComponent>
+  <AlertComponent color="red">
+    <template #title-slot> Ошибка</template>
+    <template #message-slot> Ошибка сервера 404</template>
+  </AlertComponent>
+  <AlertComponent color="yellow">
+    <template #title-slot> Предупреждение</template>
+    <template #message-slot> Нет памяти</template>
+  </AlertComponent>
+  <ComponentSlot>
+    <template #body>Тело заменили</template>
+    <p>Заменили</p>
+    <template #maininfor></template>
+  </ComponentSlot>
   <DragablEl></DragablEl>
   <RefVfor></RefVfor> <br />
   <FormValidatin></FormValidatin><br />

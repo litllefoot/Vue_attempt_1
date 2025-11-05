@@ -1,8 +1,13 @@
 import { createApp } from "vue"; // Импортируем функцию createApp из пакета vue.
 import App from "./App.vue"; // Импортируем корневой компонент (твой главный компонент App.vue).
+import ComponentSlot from "./components/ComponentSlot.vue";
 import "./style.css"; // Всё, что в style.css, будет применяться ко всему приложению.
+import AlertComponent from "./components/AlertComponent.vue";
 
-createApp(App).mount("#app"); // Создаём приложение из компонента App и «монтируем» его в HTML-элемент с id="app"
+const app = createApp(App); // создаёт Vue-приложение и делает App.vue корневым компонентом.
+app.component("ComponentSlot", ComponentSlot);
+app.component("AlertComponent", AlertComponent);
+app.mount("#app"); // Создаём приложение из компонента App и «монтируем» его в HTML-элемент с id="app"
 
 // Если нужно подключить плагины, маршрутизатор или глобальные компоненты:
 
