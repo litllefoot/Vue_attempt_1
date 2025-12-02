@@ -1,26 +1,14 @@
 <template>
   <form action="" method="post">
-    <label>Введите имя <input type="text" v-model="localName" /></label>
-    <label>введите возраст <input type="number" v-model="localAge" /></label>
+    <label>Введите имя <input type="text" v-model="name" /></label>
+    <label>введите возраст <input type="number" v-model="age" /></label>
   </form>
 </template>
 
 <script setup>
-import { ref, defineProps, watch } from "vue";
-const props = defineProps({ name: { type: String }, age: { type: Number } }); //задали входные параметры
+import { useInfo } from "@/composibles/useInfo";
 
-const localName = ref(props.name);
-const localAge = ref(props.age);
-
-const emit = defineEmits(["update:name", "update:age"]); // Объявляем какое событие родитель может определить
-
-watch(localName, (value) => {
-  emit("update:name", value);
-}); // при каком событии родитель может определить
-
-watch(localAge, (value) => {
-  emit("update:age", value);
-});
+const { name, age } = useInfo();
 </script>
 
 <style scoped>

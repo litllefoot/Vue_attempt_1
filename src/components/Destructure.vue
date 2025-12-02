@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 
 const bigObj = reactive([
   { id: 1, user: { name: undefined, age: 25 }, message: "Привет!" },

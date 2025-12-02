@@ -7,15 +7,18 @@
 </template>
 
 <script setup>
-defineProps({
+/* defineProps({
   name: {
     type: String,
     default: "Мистер (Мисс) Инкогнито",
     validator: (value) => value.length > 2,
   },
   age: { type: Number },
-});
+}); */
 /* Определяем входные параметры и их тип, значение по умолчанию */
+
+import { useInfo } from '@/composibles/useInfo';
+const { name, age } = useInfo();
 </script>
 
 <style scoped>

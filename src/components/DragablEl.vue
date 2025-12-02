@@ -24,10 +24,10 @@ const images = [image1, image2, image3];
 const isFieldOver = ref(false);
 
 const setupDraggable = (el) => {
+  if (!el) return;
   el.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text", e.target.src);
     document.documentElement.style.cursor = "grabbing";
-
   });
 
   el.addEventListener("dragend", (e) => {

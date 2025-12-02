@@ -5,8 +5,9 @@ import "./style.css"; // Всё, что в style.css, будет применя�
 import AlertComponent from "./components/AlertComponent.vue";
 
 const app = createApp(App); // создаёт Vue-приложение и делает App.vue корневым компонентом.
-app.component("ComponentSlot", ComponentSlot);
-app.component("AlertComponent", AlertComponent);
+app
+  .component("ComponentSlot", ComponentSlot)
+  .component("AlertComponent", AlertComponent); // глобальная регистрация компонентов, чтоб потом импорты не делать
 app.mount("#app"); // Создаём приложение из компонента App и «монтируем» его в HTML-элемент с id="app"
 
 // Если нужно подключить плагины, маршрутизатор или глобальные компоненты:

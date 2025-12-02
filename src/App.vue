@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, shallowRef } from "vue";
+import { ref, reactive, shallowRef, defineAsyncComponent } from "vue";
 import DifferentColour from "./components/DifferentColour.vue";
 import VModel from "./components/V-model.vue";
 import vFor from "./components/v-for.vue";
@@ -13,8 +13,27 @@ import WatchApi from "./components/WatchApi.vue";
 import WatchApiAsync from "./components/WatchApiAsync.vue";
 import FormValidatin from "./components/FormValidatin.vue";
 import RefVfor from "./components/RefVfor.vue";
-import DragablEl from "./components/DragablEl.vue";
+import LoadingComponent from "./components/LoadingComponent.vue";
+const DragablElAsync = defineAsyncComponent({
+  loader: () => {
+    return new Promise((resolve) => {
+      setTimeout(
+        () => import("./components/DragablEl.vue").then(resolve),
+        1000
+      );
+    });
+  },
+  loadingComponent: LoadingComponent,
+  delay: 1,
+});
+
+const showDragablEl = ref(false);
 import FormAgeTotal from "./components/FormAgeTotal.vue";
+import ModalWindow from "./components/ModalWindow.vue";
+import VmodelComlex from "./components/VmodelComlex.vue";
+import InputFormTroughAttr from "./components/InputFormTroughAttr.vue";
+import FormRegistraton1 from "./components/FormRegistraton1.vue";
+import vSomething from "./components/vSomething.vue";
 
 const title = ref("Здравствуйте!");
 const dataColor = ref("red");
@@ -73,10 +92,46 @@ function turboFunc() {
 function turbo10Func() {
   shallowCount.value = { count: { count: 0.5 } };
 }
+
+const isModalVisible = ref(true);
+
+function closeModal() {
+  isModalVisible.value = false;
+}
+const fio = ref("руфина литфуллина");
+const ageOfFio = ref(35);
+
+function onFocus(e) {
+  e.target.style.borderColor = "red";
+}
 </script>
 
 <template>
-  <FormAgeTotal></FormAgeTotal>
+  <vSomething></vSomething>
+  <FormRegistraton1></FormRegistraton1>
+  <InputFormTroughAttr
+    label="Имя"
+    placeholder="Тестируем наследование аттрибутов"
+    class="input-large"
+    data-test="name-field"
+    @focus.self="onFocus"
+  ></InputFormTroughAttr
+  ><br />
+  <VmodelComlex
+    v-model:nameAndSurname.capitalize="fio"
+    v-model:vozrast="ageOfFio"
+  ></VmodelComlex>
+  <br />
+  <ModalWindow
+    :is-modal-opened="isModalVisible"
+    @confirmBtn="
+      (word) => {
+        console.log(word);
+        closeModal();
+      }
+    "
+  ></ModalWindow>
+  <form-age-total></form-age-total>
   <AlertComponent color="green">
     <template #title-slot> Успешная загрузка</template>
     <template #message-slot> данные загружены на 100%</template>
@@ -94,7 +149,9 @@ function turbo10Func() {
     <p>Заменили</p>
     <template #maininfor></template>
   </ComponentSlot>
-  <DragablEl></DragablEl>
+  <button @click="showDragablEl = !showDragablEl">Показать кораблики</button>
+  <br />
+  <DragablElAsync v-if="showDragablEl"></DragablElAsync>
   <RefVfor></RefVfor> <br />
   <FormValidatin></FormValidatin><br />
   <WatchApiAsync></WatchApiAsync><br />
@@ -208,5 +265,13 @@ span {
 img {
   width: 100px;
   aspect-ratio: 1;
+}
+::v-deep(.input-large) {
+  /* позволяет «пробить» scoped-ограничение и применить стиль к внутренним элементам дочернего компонента. */
+  height: 100px;
+}
+
+::v-deep(.input-large:focus) {
+  border-color: red;
 }
 </style>

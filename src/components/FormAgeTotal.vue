@@ -4,8 +4,7 @@
   <KeepAlive>
     <component
       :is="components[activeTab]"
-      v-model:name="name1"
-      v-model:age="age1"
+
     ></component>
   </KeepAlive>
   <!-- activeTab это ключ у объекта -->
@@ -22,6 +21,5 @@ const components = {
   FormZodiak,
 }; // ключ и значения идентичны, можно указать просто ключ в таком случае
 
-const name1 = ref("");
-const age1 = ref("");
+
 </script>
